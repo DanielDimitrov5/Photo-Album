@@ -1,0 +1,28 @@
+<h1>Photo Gallery</h1>
+{{#if username}}
+<div class="add-photo">
+    <a href="/photos/add" class="btn">Add Photo</a>
+</div>
+{{/if}}
+{{#if photos.length}}
+<div class="gallery">
+    {{#each photos}}
+        {{> _photo}}
+    {{/each}}
+</div>
+<div class="pagination">
+    {{#if hasPrevPage}}
+    <a href="?page={{decrement page}}">Previous</a>
+    {{/if}}
+    
+    {{#each (range 1 totalPages)}}
+        <a href="?page={{this}}" class="{{#if (eq this ../page)}}active{{/if}}">{{this}}</a>
+    {{/each}}
+    
+    {{#if hasNextPage}}
+    <a href="?page={{increment page}}">Next</a>
+    {{/if}}
+</div>
+{{else}}
+<p>No photos to display.</p>
+{{/if}}

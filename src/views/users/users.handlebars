@@ -1,0 +1,26 @@
+<h1>Users</h1>
+
+<div class="users-container">
+    {{#each users}}
+    <div class="user-card">
+        <h2>{{this.username}}</h2>
+        <p>Photos: {{this.photoCount}}</p>
+        {{#if ../isAdmin}}
+        <a href="/photos/user/{{this.id}}" class="btn view-btn">View User's photos</a>
+        <form action="/users/user-delete/{{this.id}}" method="POST">
+            <button type="submit" class="btn delete-btn">Delete User</button>
+        </form>
+        {{/if}}
+    </div>
+    {{/each}}
+</div>
+
+<div class="pagination">
+    {{#if hasPrevPage}}
+    <a href="/users?page={{decrement currentPage}}">Previous</a>
+    {{/if}}
+
+    {{#if hasNextPage}}
+    <a href="/users?page={{increment currentPage}}">Next</a>
+    {{/if}}
+</div>

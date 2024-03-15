@@ -1,0 +1,9 @@
+<div class="photo">
+    <a href="/photos/{{this.id}}">
+        <img src="{{this.url}}" alt="{{this.title}}">
+    </a>
+    <h2>{{this.title}}</h2>
+    <p>{{this.description}}</p>
+    <p>Added on: {{formatDate this.createdAt}}</p>
+    <p>Owner: {{this.user.username}}</p>
+</div>

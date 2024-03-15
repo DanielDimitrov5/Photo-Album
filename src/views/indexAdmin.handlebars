@@ -1,0 +1,36 @@
+<h1>Admin Dashboard</h1>
+<div class="admin-dashboard">
+    <section>
+        <h2>Last 5 Photos</h2>
+        {{#if photos.length}}
+        <div class="gallery">
+            {{#each photos}}
+            <div class="photo">
+                <a href="/photos/{{this.id}}">
+                    <img src="{{this.url}}" alt="{{this.title}}" style="width:100%; max-width:200px; height:auto;">
+                </a>
+                <h3>{{this.title}}</h3>
+                <p>{{this.description}}</p>
+                <p>Added on: {{formatDate this.createdAt}}</p>
+                <p>Owner: {{this.user.username}}</p>
+            </div>
+            {{/each}}
+        </div>
+        {{else}}
+        <p>No latest photos to display.</p>
+        {{/if}}
+    </section>
+
+    <section>
+        <h2>Last 5 Registered Users</h2>
+        {{#if users.length}}
+        <ul>
+            {{#each users}}
+            <li>{{this.username}} - Registered: {{formatDate this.createdAt}}</li>
+            {{/each}}
+        </ul>
+        {{else}}
+        <p>No recent users to display.</p>
+        {{/if}}
+    </section>
+</div>

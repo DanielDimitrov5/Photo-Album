@@ -1,0 +1,41 @@
+<h1>{{photo.title}}</h1>
+<div class="single-photo-container">
+    <div class="photo-details">
+        <img src="{{photo.url}}" alt="{{photo.title}}">
+        <p>{{photo.description}}</p>
+        <p>Added on: {{formatDate photo.createdAt}}</p>
+        <p>Owner: {{photo.user.username}}</p>
+        {{#if isOwner}}
+        <form action="/photos/delete/{{photo.id}}" method="POST">
+            <button type="submit" class="btn delete-btn">Delete Photo</button>
+        </form>
+        {{else if isAdmin}}
+        <form action="/photos/delete/{{photo.id}}" method="POST">
+            <button type="submit" class="btn delete-btn">Delete Photo</button>
+        </form>
+        {{/if}}
+    </div>
+
+    <div class="comments-section">
+        <h2>Comments</h2>
+        {{#each comments}}
+        <div class="comment">
+            <p><strong>{{this.user.username}}:</strong> {{this.content}}</p>
+            {{#if ../isAdmin}}
+            <form action="/users/comment-delete/{{this.id}}" method="POST" class="comment-delete-form">
+                <button type="submit" class="btn delete-btn">Delete Comment</button>
+            </form>
+            {{/if}}
+        </div>
+        {{/each}}
+        {{#if username}}
+        <form action="/comments/add" method="POST" class="comment-form">
+            <input type="hidden" name="photoId" value="{{photo.id}}">
+            <div class="form-group">
+                <textarea name="text" rows="2" placeholder="Leave a comment..." required></textarea>
+            </div>
+            <button type="submit" class="btn">Post Comment</button>
+        </form>
+        {{/if}}
+    </div>
+</div>

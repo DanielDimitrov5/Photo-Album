@@ -1,0 +1,18 @@
+<h1>Latest Photos</h1>
+{{#if photos.length}}
+<div class="gallery">
+    {{#each photos}}
+    <div class="photo">
+        <a href="/photos/{{this.id}}">
+            <img src="{{this.url}}" alt="{{this.title}}">
+        </a>
+        <h2>{{this.title}}</h2>
+        <p>{{this.description}}</p>
+        <p>Added on: {{formatDate this.createdAt}}</p>
+        <p>Owner: {{this.user.username}}</p>
+    </div>
+    {{/each}}
+</div>
+{{else}}
+<p>No latest photos to display.</p>
+{{/if}}

@@ -1,0 +1,174 @@
+/* Gallery Styling */
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* Photo Cards Styling */
+.photo, .user-card {
+    border: 1px solid #ddd;
+    padding: 10px;
+    width: calc(33.333% - 20px);
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.photo img, .photo-details img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+/* Single Photo Container Styling */
+.single-photo-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.photo-details, .comments-section {
+    flex: 1;
+}
+
+.comments-section {
+    border-left: 1px solid #ccc;
+    padding-left: 20px;
+}
+
+.comment {
+    margin-bottom: 15px;
+}
+
+.comment-form textarea {
+    width: calc(100% - 20px);
+    margin-bottom: 10px;
+}
+
+/* Pagination Styling */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination a, .btn {
+    margin: 0 10px;
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.pagination a:hover, .btn:hover {
+    background-color: #0056b3;
+}
+
+.pagination a.active {
+    background-color: #004085;
+    font-weight: bold;
+}
+
+/* Form Styling */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="url"],
+.form-group textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Responsive Design Adjustments */
+@media (max-width: 768px) {
+    .photo, .user-card {
+        width: calc(50% - 20px);
+    }
+}
+
+@media (max-width: 480px) {
+    .photo, .user-card {
+        width: 100%;
+    }
+}
+
+/* Adjusted Admin Dashboard Styles */
+.admin-dashboard .gallery .photo img {
+    max-width: 150px; /* Smaller width for photos */
+    max-height: 150px; /* Optional: if you want to limit the height as well */
+    object-fit: cover; /* Ensures the images maintain their aspect ratio */
+}
+
+.admin-dashboard .users-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Responsive grid layout for users */
+    gap: 20px;
+}
+
+.admin-dashboard .user-card {
+    background-color: #f4f4f4; /* Light background for contrast */
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.admin-dashboard .user-card h2 {
+    font-size: 1rem; /* Smaller font size for names */
+    margin: 10px 0 5px; /* Adjust spacing around the name */
+}
+
+.admin-dashboard .user-card p {
+    font-size: 0.9rem; /* Slightly smaller font size for details */
+    margin: 5px 0; /* Tighter spacing for paragraph elements */
+}
+
+/* Pagination and Button Adjustments for Consistency */
+.admin-dashboard .pagination a, .admin-dashboard .btn {
+    font-size: 0.9rem; /* Match button and link sizes to the new styles */
+    padding: 5px 12px; /* Smaller padding for a more compact look */
+}
+
+/* Enhancements for Responsive Behavior */
+@media (max-width: 768px) {
+    .admin-dashboard .gallery .photo img {
+        max-width: 100px; /* Even smaller photos on mobile devices */
+        max-height: 100px;
+    }
+
+    .admin-dashboard .users-container {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Adjust grid columns for smaller screens */
+    }
+}
+
+.delete-btn {
+    background-color: #ff4d4d; /* Red color to indicate deletion */
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background-color: #cc0000; /* Darker red on hover */
+}
+
+
