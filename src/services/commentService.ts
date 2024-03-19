@@ -2,7 +2,7 @@ import { ICommentService } from "../interfaces/comments/ICommentServices";
 import Comment from "../database/models/comment";
 import User from "../database/models/user";
 
-export class CommentService implements ICommentService {
+export default class CommentService implements ICommentService {
     async addComment(photoId: number, userId: number, text: string): Promise<any> {
         if (!text) {
             throw new Error('Comment cannot be empty');

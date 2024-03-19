@@ -1,7 +1,7 @@
-import { Request, Response, NextFunction } from 'express';
-import { CustomSession } from '../../interfaces/users/ISession';
+import { Response, NextFunction } from 'express';
+import { RequestSession } from '../../interfaces/users/ISession';
 
-const sessionMiddleware = (req: Request & { session: CustomSession }, res: Response, next: NextFunction) => {
+const sessionMiddleware = (req: RequestSession, res: Response, next: NextFunction) => {
     if (req.session.username) {
         res.locals.username = req.session.username;
         res.locals.isAdmin = req.session.isAdmin;

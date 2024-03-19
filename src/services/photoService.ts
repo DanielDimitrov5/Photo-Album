@@ -2,7 +2,7 @@ import Photo from "../database/models/photo";
 import User from "../database/models/user";
 import { IPhotoService } from "../interfaces/photos/IPhotoService";
 
-export class PhotoService implements IPhotoService{
+export default class PhotoService implements IPhotoService{
     async getPhotos(page = 1, limit = 9, userId?: number) {
 
         const offset = (page - 1) * limit;

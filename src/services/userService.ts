@@ -2,17 +2,10 @@ import bcrypt from 'bcrypt';
 import User from '../database/models/user';
 import { IUserModel, UserWithPhotoCount, TotalUsersResult, UsersWithPagination } from '../interfaces/users/IUserService';
 import { IUserService } from '../interfaces/users/IUserService';
-import Message from '../database/models/message';
 import sequelize from '../database/sequelizeClient';
 import { QueryTypes } from 'sequelize';
-import { MailConfig } from '../config/emailConfig';
 
-export class UserService implements IUserService {
-    mailConfig: MailConfig;
-
-    constructor(mailConfig: MailConfig) {
-        this.mailConfig = mailConfig;
-    }
+export default class UserService implements IUserService {
 
     async createUser(username: string, password: string, isAdmin = false) {
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -65,26 +58,6 @@ export class UserService implements IUserService {
             limit: count,
             order: [['createdAt', 'DESC']],
         });
-    }
-
-    async sendMessage(userId: number, title: string, content: string) {
-        if (!userId) {
-            throw new Error('User not found');
-        }
-
-        if (!title || !content) {
-            throw new Error('Title and content are required');
-        }
-
-        try {
-            Message.create({ title, content, userId });
-
-            this.mailConfig.sendMessage(title, content);
-
-        } catch (error: any) {
-            console.error('Error creating message:', error);
-            throw new Error(`Error creating message: ${error.message}`);
-        }
     }
 
     async deleteUser(id: number, userId: number) {

@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import { IPhotoService } from "../interfaces/photos/IPhotoService";
 import { ICommentService } from "../interfaces/comments/ICommentServices";
-import { CustomSession } from "../interfaces/users/ISession";
+import { RequestSession } from "../interfaces/users/ISession";
 
-export class PhotoController {
+export default class PhotoController {
     photoService: IPhotoService;
     commentService: ICommentService;
 
@@ -41,7 +41,7 @@ export class PhotoController {
         res.render('addPhoto');
     }
 
-    addPhotoPOST = async (req: Request & { session: CustomSession }, res: Response) => {
+    addPhotoPOST = async (req: RequestSession, res: Response) => {
         const { title, description, url } = req.body;
         const userId = req.session.userId ?? 0;
 
@@ -54,7 +54,7 @@ export class PhotoController {
         }
     }
 
-    singlePhoto = async (req: Request & { session: CustomSession }, res: Response) => {
+    singlePhoto = async (req: RequestSession, res: Response) => {
         const id = parseInt(req.params.id);
         const userId = req.session.userId;
         try {
@@ -70,7 +70,7 @@ export class PhotoController {
         }
     };
 
-    deletePhoto = async (req: Request & { session: CustomSession }, res: Response) => {
+    deletePhoto = async (req: RequestSession, res: Response) => {
         const id = parseInt(req.params.id);
 
         const userId = req.session.userId ?? 0;

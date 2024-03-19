@@ -1,7 +1,7 @@
 import express, { Router } from "express";
-import { PhotoController } from "../controllers/photoController";
-import { PhotoService } from "../services/photoService";
-import { CommentService } from "../services/commentService";
+import PhotoController from "../controllers/photoController";
+import PhotoService from "../services/photoService";
+import CommentService from "../services/commentService";
 import { isLoggedIn, isAdmin } from "../middlewares/auth/authMiddlewares";
 
 const photoRouter: Router = express.Router();

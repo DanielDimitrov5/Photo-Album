@@ -1,11 +1,8 @@
-import User from "./models/user";
 import Photo from "./models/photo";
-import Comment from "./models/comment";
-import { UserService } from "../services/userService";
-import { MailConfig } from "../config/emailConfig";
+import UserService from "../services/userService";
 
 export default class Seeder {
-    static userService = new UserService(new MailConfig());
+    static userService = new UserService();
 
     public static async seed() {
         await Seeder.seedUsers();

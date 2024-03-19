@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
-import { CustomSession } from '../interfaces/users/ISession';
-import { IUserService } from '../interfaces/users/IUserService';
+import { RequestSession } from '../interfaces/users/ISession';
 import { ICommentService } from '../interfaces/comments/ICommentServices';
+import { IUserMailService } from '../interfaces/users/IUserService';
 
-export class UserController {
-    userService: IUserService;
+export default class UserController {
+    userService: IUserMailService;
     commentService: ICommentService;
 
-    constructor(userService: IUserService, commentService: ICommentService) {
+    constructor(userService: IUserMailService, commentService: ICommentService) {
         this.userService = userService;
         this.commentService = commentService;
     }
@@ -38,7 +38,7 @@ export class UserController {
         res.render('login');
     }
 
-    loginPOST = async (req: Request & { session: CustomSession }, res: Response) => {
+    loginPOST = async (req: RequestSession, res: Response) => {
         const { username, password } = req.body;
         const isValid = await this.userService.verifyUser(username, password);
 
@@ -56,8 +56,8 @@ export class UserController {
         res.redirect('/');
     };
 
-    logout = (req: Request & { session: CustomSession }, res: Response) => {
-        req.session.destroy((err) => {
+    logout = (req: RequestSession, res: Response) => {
+        req.session.destroy((err: any) => {
             if (err) {
                 console.error(err);
             }
@@ -92,7 +92,7 @@ export class UserController {
         res.render('message');
     }
 
-    messagePOST = async (req: Request & { session: CustomSession }, res: Response) => {
+    messagePOST = async (req: RequestSession, res: Response) => {
         const { title, content } = req.body;
         if (!req.session.userId) {
             res.redirect('/users/login');
@@ -105,7 +105,7 @@ export class UserController {
         res.status(200).send('Message sent!');
     }
 
-    deleteComment = async (req: Request & { session: CustomSession }, res: Response) => {
+    deleteComment = async (req: RequestSession, res: Response) => {
         const commentId = parseInt(req.params.id, 10);
         const userId = req.session.userId as number;
 
@@ -118,7 +118,7 @@ export class UserController {
         }
     }
 
-    deleteUser = async (req: Request & { session: CustomSession }, res: Response) => {
+    deleteUser = async (req: RequestSession, res: Response) => {
         const userId = parseInt(req.params.id, 10);
         const currentUserId = req.session.userId as number;
 

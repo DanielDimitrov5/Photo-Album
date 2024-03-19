@@ -1,7 +1,7 @@
-import { Request, Response, NextFunction } from 'express';
-import { CustomSession } from '../../interfaces/users/ISession';
+import { Response, NextFunction } from 'express';
+import { RequestSession } from '../../interfaces/users/ISession';
 
-const isLoggedIn = (req: Request & { session: CustomSession }, res: Response, next: NextFunction) => {
+const isLoggedIn = (req: RequestSession, res: Response, next: NextFunction) => {
     if (req.session.username) {
         next();
     } else {
@@ -9,7 +9,7 @@ const isLoggedIn = (req: Request & { session: CustomSession }, res: Response, ne
     }
 }
 
-const isGuest = (req: Request & { session: CustomSession }, res: Response, next: NextFunction) => {
+const isGuest = (req: RequestSession, res: Response, next: NextFunction) => {
     if (!req.session.username) {
         next();
     } else {
@@ -17,7 +17,7 @@ const isGuest = (req: Request & { session: CustomSession }, res: Response, next:
     }
 }
 
-const isAdmin = (req: Request & { session: CustomSession }, res: Response, next: NextFunction) => {
+const isAdmin = (req: RequestSession, res: Response, next: NextFunction) => {
     if (req.session.username && req.session.isAdmin) {
         next();
     } else {

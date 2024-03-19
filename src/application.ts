@@ -9,7 +9,7 @@ import { initializeDatabase } from './database/connection';
 import sessionMiddleware from './middlewares/auth/session';
 import helpers from './utils/helpers';
 
-export class Application {
+export default class Application {
     app: Express;
 
     constructor() {

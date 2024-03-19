@@ -1,7 +1,7 @@
 import express, { Router } from 'express';
-import { UserController } from '../controllers/userController';
-import { UserService } from '../services/userService';
-import { CommentService } from '../services/commentService';
+import UserController from '../controllers/userController';
+import UserMailService from '../services/userMailService';
+import CommentService from '../services/commentService';
 import { isGuest, isLoggedIn, isAdmin } from '../middlewares/auth/authMiddlewares';
 import { MailConfig } from '../config/emailConfig';
 
@@ -9,7 +9,7 @@ const userRouter: Router = express.Router();
 
 const mailConfig = new MailConfig();
 
-const userService = new UserService(mailConfig);
+const userService = new UserMailService(mailConfig);
 const commentService = new CommentService();
 
 const userController = new UserController(userService, commentService);

@@ -1,4 +1,4 @@
-import { Application } from './application';
+import Application from './application';
 import { configDotenv } from 'dotenv';
 configDotenv();
 

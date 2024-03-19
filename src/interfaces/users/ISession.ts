@@ -1,9 +1,14 @@
-import { SessionData } from "express-session";
+import { SessionData, Session } from "express-session";
+import { Request } from 'express';
 
-interface CustomSession extends SessionData {
-    userId?: number;
-    username?: string;
-    isAdmin?: boolean;
-  }
+interface CustomSession extends SessionData, Session {
+  userId?: number;
+  username?: string;
+  isAdmin?: boolean;
+}
 
-  export { CustomSession };
+interface RequestSession extends Request {
+  session: CustomSession;
+}
+
+export { RequestSession };
