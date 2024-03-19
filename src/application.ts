@@ -18,16 +18,17 @@ export default class Application {
     }
 
     private initialize() {
-        this.app.engine('handlebars', engine({
+        this.app.engine('hbs', engine({
             runtimeOptions: {
                 allowProtoPropertiesByDefault: true,
                 allowProtoMethodsByDefault: true
             },
             helpers: helpers,
             layoutsDir: 'src/views/layouts',
-            partialsDir: 'src/views/partials'
+            partialsDir: 'src/views/partials',
+            extname: '.hbs'
         }));
-        this.app.set('view engine', 'handlebars');
+        this.app.set('view engine', 'hbs');
         this.app.set('views', ['./src/views', './src/views/users', './src/views/photos', './src/views/comments', './src/views/partials']);
         
         this.app.use(express.static('public'));
