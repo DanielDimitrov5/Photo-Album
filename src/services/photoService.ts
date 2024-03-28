@@ -29,8 +29,10 @@ export default class PhotoService implements IPhotoService{
         if (!canAdd) {
             throw new Error('You can only add 10 photos');
         }
-
-        return await Photo.create({title, description, url, userId});
+        // Create a new photo & return is's id;
+        
+        const photo = await Photo.create({title, description, url, userId});
+        return photo.id;
     }
 
     async getPhoto(id: number) {

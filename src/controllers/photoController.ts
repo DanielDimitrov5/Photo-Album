@@ -49,8 +49,8 @@ export default class PhotoController {
         const userId = req.session.userId ?? 0;
 
         try {
-            await this.photoService.addPhoto(title, description, url, userId);
-            this.io.emit('photoAdded', { title, description, url });
+            const photoId = await this.photoService.addPhoto(title, description, url, userId);
+            this.io.emit('photoAdded', { title, description, url, photoId });
 
             res.redirect('/photos');
         } catch (error: any) {
