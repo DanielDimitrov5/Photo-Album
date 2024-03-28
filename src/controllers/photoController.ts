@@ -2,14 +2,17 @@ import { Request, Response } from "express";
 import { IPhotoService } from "../interfaces/photos/IPhotoService";
 import { ICommentService } from "../interfaces/comments/ICommentServices";
 import { RequestSession } from "../interfaces/users/ISession";
+import {Server as SocketIOServer} from 'socket.io';
 
 export default class PhotoController {
     photoService: IPhotoService;
     commentService: ICommentService;
+    io: SocketIOServer;
 
-    constructor(photoService: IPhotoService, commentService: ICommentService) {
+    constructor(photoService: IPhotoService, commentService: ICommentService, io: SocketIOServer) {
         this.photoService = photoService;
         this.commentService = commentService;
+        this.io = io;
     }
 
     photos = async (req: Request, res: Response) => {
@@ -47,6 +50,8 @@ export default class PhotoController {
 
         try {
             await this.photoService.addPhoto(title, description, url, userId);
+            this.io.emit('photoAdded', { title, description, url });
+
             res.redirect('/photos');
         } catch (error: any) {
             console.error('Error adding photo:', error);

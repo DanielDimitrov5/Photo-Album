@@ -8,7 +8,8 @@ const dbPassword = process.env.DB_PASSWORD || '';
 
 const sequelize = new Sequelize(dbName, dbUser, dbPassword, {
     host: 'localhost',
-    dialect: 'mysql'
+    dialect: 'mysql',
+    logging: false
 });
 
 export default sequelize;

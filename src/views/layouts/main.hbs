@@ -5,10 +5,11 @@
     <title>Photo Site</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/stylesheets/style.css">
-
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script>
 </head>
 
 <body>
+    <div id="alert"></div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="/">Photo Site</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -54,6 +55,7 @@
             </ul>
         </div>
     </nav>
+    <div id="alert"></div>
 
     {{{body}}}
 
@@ -62,6 +64,8 @@
             <p>&copy; {{currentYear}} Photo Site. :)</p>
         </div>
     </footer>
+
+    <script src="/js/script.js"></script>
 
 </body>
 

@@ -1,24 +1,37 @@
-import express, { Router } from "express";
+import { Router } from "express";
 import PhotoController from "../controllers/photoController";
 import PhotoService from "../services/photoService";
 import CommentService from "../services/commentService";
 import { isLoggedIn, isAdmin } from "../middlewares/auth/authMiddlewares";
+import { Server as SocketIOServer } from "socket.io";
 
-const photoRouter: Router = express.Router();
+export default class PhotoRouterConfig {
+    private router: Router;
+    private io: SocketIOServer;
 
-const photoService = new PhotoService();
-const commentService = new CommentService();
+    constructor(io: SocketIOServer) {
+        this.router = Router();
+        this.io = io;
+        this.configure();
+    }
 
-const photoController = new PhotoController(photoService, commentService);
+    private configure() {
+        const photoService = new PhotoService();
+        const commentService = new CommentService();
+        const photoController = new PhotoController(photoService, commentService, this.io);
+    
+        this.router.get('/', photoController.photos);
+    
+        this.router.get('/user/:id', isAdmin, photoController.photosUser);
+    
+        this.router.get('/add', isLoggedIn, photoController.addPhotoGET);
+        this.router.post('/add', isLoggedIn, photoController.addPhotoPOST);
+    
+        this.router.get('/:id', photoController.singlePhoto);
+        this.router.post('/delete/:id', isLoggedIn, photoController.deletePhoto);
+    }
 
-photoRouter.get('/', photoController.photos);
-
-photoRouter.get('/user/:id', isAdmin, photoController.photosUser);
-
-photoRouter.get('/add', isLoggedIn, photoController.addPhotoGET);
-photoRouter.post('/add', isLoggedIn, photoController.addPhotoPOST);
-
-photoRouter.get('/:id', photoController.singlePhoto);
-photoRouter.post('/delete/:id', isLoggedIn, photoController.deletePhoto);
-
-export default photoRouter;
+    public getRouter(): Router {
+        return this.router;
+    }
+}

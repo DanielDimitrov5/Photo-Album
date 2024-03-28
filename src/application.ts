@@ -1,9 +1,11 @@
 import express, { Express } from 'express';
+import http from 'http';
+import { Server as ServerIOSocket } from 'socket.io';
 import { engine } from 'express-handlebars';
 import { sessionConfig } from './config/sessionConfig';
 import indexRouter from './routes/indexRoutes';
 import userRouter from './routes/userRoutes';
-import photoRouter from './routes/photoRoutes';
+import PhotoRouterConfig from './routes/photoRoutes';
 import commentRouter from './routes/commentRoutes';
 import { initializeDatabase } from './database/connection';
 import sessionMiddleware from './middlewares/auth/session';
@@ -11,10 +13,21 @@ import helpers from './utils/helpers';
 
 export default class Application {
     app: Express;
+    httpServer: http.Server;
+    io: ServerIOSocket;
 
     constructor() {
         this.app = express();
+        this.httpServer = http.createServer(this.app);
+        this.io = new ServerIOSocket(this.httpServer, {
+            cors: {
+                origin: 'http://localhost:3000',
+                methods: ['GET', 'POST']
+            }
+        
+        });
         this.initialize();
+        this.initializeWebSocket();
     }
 
     private initialize() {
@@ -41,11 +54,22 @@ export default class Application {
         
         this.app.get('/', indexRouter);
         this.app.use('/users', userRouter);
-        this.app.use('/photos', photoRouter);
         this.app.use('/comments', commentRouter);
+        const photoRouter = new PhotoRouterConfig(this.io).getRouter();
+        this.app.use('/photos', photoRouter);
+    }
+
+    private initializeWebSocket() {
+        this.io.on('connection', (socket) => {
+            console.log('A user connected via WebSocket');
+
+            socket.on('disconnect', () => {
+                console.log('User disconnected');
+            });
+        });
     }
 
     public listen(port: number) {
-        this.app.listen(port, () => console.log(`Server is running on port ${port}`));
+        this.httpServer.listen(port, () => console.log(`Server is running on port ${port}`));
     }
 }
