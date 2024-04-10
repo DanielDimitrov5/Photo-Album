@@ -10,6 +10,8 @@ import commentRouter from './routes/commentRoutes';
 import { initializeDatabase } from './database/connection';
 import sessionMiddleware from './middlewares/auth/session';
 import helpers from './utils/helpers';
+import { configDotenv } from 'dotenv';
+configDotenv();
 
 export default class Application {
     app: Express;
@@ -21,7 +23,7 @@ export default class Application {
         this.httpServer = http.createServer(this.app);
         this.io = new ServerIOSocket(this.httpServer, {
             cors: {
-                origin: 'http://localhost:3000',
+                origin: `http://localhost:${process.env.PORT || 3000}`,
                 methods: ['GET', 'POST']
             }
         
