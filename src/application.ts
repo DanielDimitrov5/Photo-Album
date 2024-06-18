@@ -32,7 +32,7 @@ export default class Application {
         this.initializeWebSocket();
     }
 
-    private initialize() {
+    private async initialize() {
         this.app.engine('hbs', engine({
             runtimeOptions: {
                 allowProtoPropertiesByDefault: true,
@@ -52,7 +52,7 @@ export default class Application {
         this.app.use(sessionConfig);
         this.app.use(sessionMiddleware);
 
-        initializeDatabase();
+        await initializeDatabase();
         
         this.app.get('/', indexRouter);
         this.app.use('/users', userRouter);

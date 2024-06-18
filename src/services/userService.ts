@@ -7,21 +7,25 @@ import { QueryTypes } from 'sequelize';
 
 export default class UserService implements IUserService {
 
+    // Create a new user with the provided username, password, and isAdmin flag
     async createUser(username: string, password: string, isAdmin = false) {
         const hashedPassword = await bcrypt.hash(password, 10);
         User.create({ username, password: hashedPassword, isAdmin});
     }
 
+    // Verify if the provided username and password match a user in the database
     async verifyUser(username: string, password: string): Promise<boolean> {
         const user = await User.findOne({ where: { username } });
         if (!user) return false;
         return bcrypt.compare(password, user.password);
     }
 
+    // Find a user by their username
     async findUserByUsername(username: string): Promise<IUserModel | null> {
         return User.findOne({ where: { username } });
     }
 
+    // Get a paginated list of users with the count of their associated photos
     async getUsersWithPhotoCount(page = 1, limit = 9): Promise<UsersWithPagination> {
         const offset = (page - 1) * limit;
 
@@ -53,6 +57,7 @@ export default class UserService implements IUserService {
         };
     }
 
+    // Get the last N users based on the provided count
     async getLastUsers(count: number): Promise<IUserModel[]> {
         return User.findAll({
             limit: count,
@@ -60,6 +65,7 @@ export default class UserService implements IUserService {
         });
     }
 
+    // Delete a user with the provided ID, only allowed for admin users
     async deleteUser(id: number, userId: number) {
         const user = await User.findByPk(id);
         const currentUser = await User.findByPk(userId);

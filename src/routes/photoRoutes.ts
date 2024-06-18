@@ -16,19 +16,22 @@ export default class PhotoRouterConfig {
     }
 
     private configure() {
+        // Create instances of the required services and controller
         const photoService = new PhotoService();
         const commentService = new CommentService();
         const photoController = new PhotoController(photoService, commentService, this.io);
     
-        this.router.get('/', photoController.photos);
+        // Configure the routes
+        this.router.get('/', photoController.photos); // Route to get all photos
     
-        this.router.get('/user/:id', isAdmin, photoController.photosUser);
+        this.router.get('/user/:id', isAdmin, photoController.photosUser); // Route to get photos by user ID, accessible only to admins
     
-        this.router.get('/add', isLoggedIn, photoController.addPhotoGET);
-        this.router.post('/add', isLoggedIn, photoController.addPhotoPOST);
+        this.router.get('/add', isLoggedIn, photoController.addPhotoGET); // Route to render the add photo form, accessible only to logged-in users
+        this.router.post('/add', isLoggedIn, photoController.addPhotoPOST); // Route to handle the submission of the add photo form, accessible only to logged-in users
     
-        this.router.get('/:id', photoController.singlePhoto);
-        this.router.post('/delete/:id', isLoggedIn, photoController.deletePhoto);
+        this.router.get('/:id', photoController.singlePhoto); // Route to get a single photo by ID
+    
+        this.router.post('/delete/:id', isLoggedIn, photoController.deletePhoto); // Route to delete a photo by ID, accessible only to logged-in users
     }
 
     public getRouter(): Router {

@@ -3,7 +3,7 @@ import { MailConfig } from "../config/emailConfig";
 import Message from "../database/models/message";
 import { IUserMailService } from "../interfaces/users/IUserService";
 
-export default class UserMailService extends UserService implements IUserMailService{
+export default class UserMailService extends UserService implements IUserMailService {
     mailConfig: MailConfig;
 
     constructor(mailConfig: MailConfig) {
@@ -11,6 +11,7 @@ export default class UserMailService extends UserService implements IUserMailSer
         this.mailConfig = mailConfig;
     }
 
+    // Method to send a message to a user
     async sendMessage(userId: number, title: string, content: string) {
         if (!userId) {
             throw new Error('User not found');
@@ -21,8 +22,10 @@ export default class UserMailService extends UserService implements IUserMailSer
         }
 
         try {
+            // Create a new message in the database
             Message.create({ title, content, userId });
 
+            // Send the message using the mail configuration
             this.mailConfig.sendMessage(title, content);
 
         } catch (error: any) {

@@ -5,8 +5,8 @@ export default class Seeder {
     static userService: UserService = new UserService();
 
     public static async seed() {
-        await Seeder.seedUsers();
-        await Seeder.seedPhotos();
+        await Seeder.seedUsers(); // Seed users
+        await Seeder.seedPhotos(); // Seed photos
 
         console.log('Data seeding completed.');
     }
@@ -14,10 +14,10 @@ export default class Seeder {
     private static async seedUsers() {
         try {
             await Promise.all([
-                this.userService.createUser("admin", "123", true),
-                this.userService.createUser("Ivan", "123", false),
-                this.userService.createUser("Georgi", "123", false),
-                this.userService.createUser("Stefan", "123", false)
+                this.userService.createUser("admin", "123", true), // Create admin user
+                this.userService.createUser("Ivan", "123", false), // Create regular user
+                this.userService.createUser("Georgi", "123", false), // Create regular user
+                this.userService.createUser("Stefan", "123", false) // Create regular user
             ]);
             console.log('Users seeded successfully.');
         } catch (error) {

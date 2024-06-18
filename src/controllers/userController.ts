@@ -12,10 +12,12 @@ export default class UserController {
         this.commentService = commentService;
     }
 
+    // Renders the register page
     registerGET = (req: Request, res: Response) => {
         res.render('register');
     };
 
+    // Handles the registration form submission
     registerPOST = async (req: Request, res: Response) => {
         const { username, password } = req.body;
 
@@ -34,10 +36,12 @@ export default class UserController {
         }
     };
     
+    // Renders the login page
     loginGET = (req: Request, res: Response) => {
         res.render('login');
     }
 
+    // Handles the login form submission
     loginPOST = async (req: RequestSession, res: Response) => {
         const { username, password } = req.body;
         const isValid = await this.userService.verifyUser(username, password);
@@ -56,6 +60,7 @@ export default class UserController {
         res.redirect('/');
     };
 
+    // Handles the logout request
     logout = (req: RequestSession, res: Response) => {
         req.session.destroy((err: any) => {
             if (err) {
@@ -65,6 +70,7 @@ export default class UserController {
         });
     }
 
+    // Renders the users page with pagination
     users = async (req: Request, res: Response) => {
         const page = parseInt(req.query.page as string, 10) || 1;
         const limit = parseInt(req.query.limit as string, 10) || 9;
@@ -88,10 +94,12 @@ export default class UserController {
         }
     };
 
+    // Renders the message page
     messageGET = (req: Request, res: Response) => {
         res.render('message');
     }
 
+    // Handles the message form submission
     messagePOST = async (req: RequestSession, res: Response) => {
         const { title, content } = req.body;
         if (!req.session.userId) {
@@ -105,6 +113,7 @@ export default class UserController {
         res.status(200).send('Message sent!');
     }
 
+    // Deletes a comment
     deleteComment = async (req: RequestSession, res: Response) => {
         const commentId = parseInt(req.params.id, 10);
         const userId = req.session.userId as number;
@@ -118,6 +127,7 @@ export default class UserController {
         }
     }
 
+    // Deletes a user
     deleteUser = async (req: RequestSession, res: Response) => {
         const userId = parseInt(req.params.id, 10);
         const currentUserId = req.session.userId as number;
